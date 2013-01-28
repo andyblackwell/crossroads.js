@@ -1,4 +1,3 @@
-
     // Crossroads --------
     //====================
 
@@ -27,6 +26,8 @@
         shouldTypecast : false,
 
         normalizeFn : null,
+
+        normalizeRequest : null,
 
         resetState : function(){
             this._prevRoutes.length = 0;
@@ -60,6 +61,10 @@
         parse : function (request, defaultArgs) {
             request = request || '';
             defaultArgs = defaultArgs || [];
+            
+            if (isFunction(this.normalizeRequest)) {
+                request = this.normalizeRequest(request);
+            }
 
             // should only care about different requests if ignoreState isn't true
             if ( !this.ignoreState &&
